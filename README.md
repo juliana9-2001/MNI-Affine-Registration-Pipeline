@@ -13,7 +13,7 @@ This preprocessing step is critical for:
 - Enabling voxel-wise analysis and atlas-based feature extraction
 - Improving consistency for downstream machine learning pipelines
 
-# ⚠️ Prerequisite — Skull Stripping (Critical)
+# ⚠️ Prerequisite - Skull Stripping (Critical)
 
 Input images must be skull-stripped (brain-extracted).
 Registering whole-head images (with skull, eyes, and neck) to a brain-only template will lead to severe misalignment and unstable optimization.
