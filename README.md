@@ -1,9 +1,5 @@
 # MNI-Affine-Registration-Pipeline
-
-Performs linear spatial normalization (Affine, 12-DOF) to the MNI152 template. This pipeline standardizes head position and size, serving as a robust initialization step before creating separate pipelines for lesion segmentation.
-
-# MNI-Affine-Registration-Pipeline
-Automated spatial normalization of multi-modal brain MRI (DWI/FLAIR/SWI) to the MNI152 template using Linear Affine Registration (SimpleITK).
+Automated spatial normalization of multi-modal brain MRI (DWI/FLAIR/SWI) to the MNI152 template using Linear Affine Registration (SimpleITK). This pipeline standardizes head position and size, serving as a robust initialization step before creating separate pipelines for lesion segmentation.
 
 ## 📌 Overview
 This repository contains a robust Python pipeline for registering clinical neuroimaging data to the standard **MNI152 coordinate space**. It uses **Linear Affine Registration (12 Degrees of Freedom)** with **Mattes Mutual Information**, making it suitable for multi-modal registration (e.g., aligning DWI/ADC images to a T1-weighted template).
