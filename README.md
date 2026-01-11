@@ -51,3 +51,6 @@ Required Libraries: SimpleITK, numpy, nilearn
 To run the registration pipeline on a batch of images:
 ```bash
 python src/register_to_mni.py --input_dir ./data/skullstripped --output_dir ./data/registered
+
+# Limitations
+This pipeline performs affine normalization only. It does not account for nonlinear anatomical deformation and is intended as a fast, robust initialization step rather than final morphometric alignment.
