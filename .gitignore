@@ -1,0 +1,7 @@
+data/
+*.nii
+*.nii.gz
+*.npy
+*.csv
+__pycache__/
+.DS_Store
