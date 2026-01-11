@@ -1,39 +1,53 @@
-# MNI-Affine-Registration-Pipeline
-Automated spatial normalization of multi-modal brain MRI (DWI/FLAIR/SWI) to the MNI152 template using Linear Affine Registration (SimpleITK). This pipeline standardizes head position and size, serving as a robust initialization step before creating separate pipelines for lesion segmentation.
+# 🧠 MNI-Affine-Registration-Pipeline
 
-## 📌 Overview
-This repository contains a robust Python pipeline for registering clinical neuroimaging data to the standard **MNI152 coordinate space**. It uses **Linear Affine Registration (12 Degrees of Freedom)** with **Mattes Mutual Information**, making it suitable for multi-modal registration (e.g., aligning DWI/ADC images to a T1-weighted template).
+**Automated spatial normalization of multi-modal brain MRI (DWI / FLAIR / SWI) to the MNI152 template using linear affine registration (SimpleITK).**
 
-This preprocessing step is critical for standardizing head position and size before lesion segmentation or deep learning feature extraction.
+This pipeline standardizes head position, orientation, and scale across subjects, providing a robust initialization step for downstream tasks such as lesion segmentation, atlas mapping, and deep learning feature extraction.
 
-## ⚠️ Prerequisites: Skull Stripping
-**CRITICAL:** This pipeline requires **skull-stripped (brain extracted)** images as input. 
-Attempting to register whole-head images (with skull/eyes) to a brain-only template will result in severe misalignment.
+# 📌 Overview
 
-### Recommended Tool: SynthStrip
-For robust skull stripping across different modalities (DWI, FLAIR, T1), I recommend using **SynthStrip** (part of FreeSurfer/SynthSeg).
+This repository provides a reproducible Python pipeline for registering clinical neuroimaging data into the standard MNI152 coordinate space using 12-DOF affine registration with Mattes Mutual Information.
+The pipeline is designed for multi-modal alignment, making it suitable for registering contrast-diverse scans (e.g., DWI, ADC, FLAIR, SWI) to a common anatomical template.
+This preprocessing step is critical for:
+- Standardizing spatial geometry across cohorts
+- Enabling voxel-wise analysis and atlas-based feature extraction
+- Improving consistency for downstream machine learning pipelines
 
-**Why SynthStrip?** Unlike traditional tools (e.g., FSL BET), SynthStrip uses a deep learning model that is agnostic to image contrast, making it highly effective for pathological brains (stroke/tumor).
+# ⚠️ Prerequisite — Skull Stripping (Critical)
 
-**How to run via Docker:**
+Input images must be skull-stripped (brain-extracted).
+Registering whole-head images (with skull, eyes, and neck) to a brain-only template will lead to severe misalignment and unstable optimization.
+
+# ✅ Recommended Tool: SynthStrip
+
+For robust skull stripping across heterogeneous MRI contrasts and pathological brains, SynthStrip (from FreeSurfer / SynthSeg) is strongly recommended.
+
+Why SynthStrip?
+
+- Deep learning–based and contrast-agnostic
+- Works reliably across DWI, FLAIR, T1, pathological brains (stroke, tumor)
+- Outperforms traditional heuristic tools (e.g., FSL BET) in clinical data
+
+# Example (Docker):
 ```bash
 # Example command to skull-strip using SynthStrip container
 docker run --rm -v $(pwd):/data freesurfer/synthstrip:latest \
     -i /data/input_scan.nii.gz \
     -o /data/input_scan_brain.nii.gz
 
-### 🛠️ Installation
+# 🛠️ Installation
 Clone this repository:
-Bash
-git clone [https://github.com/IqraWaheed/MNI-Affine-Registration-Pipeline.git](https://github.com/IqraWaheed/MNI-Affine-Registration-Pipeline.git)
+```bash
+git clone https://github.com/IqraWaheed/MNI-Affine-Registration-Pipeline.git
 cd MNI-Affine-Registration-Pipeline
 
 # Install dependencies:
-Bash
+```bash
 pip install -r requirements.txt
+
 Required Libraries: SimpleITK, numpy, nilearn
 
-### 🚀 Usage
+# 🚀 Usage
 To run the registration pipeline on a batch of images:
-Bash
+```bash
 python src/register_to_mni.py --input_dir ./data/skullstripped --output_dir ./data/registered
